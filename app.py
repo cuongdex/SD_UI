@@ -1,6 +1,14 @@
 from flask import Flask, render_template, request
 import torch
 from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
+from pyngrok import ngrok, conf
+conf.get_default().auth_token = ""
+
+public_url = ngrok.connect(8888).public_url
+print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:{}/\"".format(public_url, 5000))
+
+# Update any base URLs to use the public ngrok URL
+app.config["BASE_URL"] = public_url
 
 app = Flask(__name__)
 
