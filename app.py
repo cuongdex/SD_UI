@@ -1,20 +1,20 @@
 from flask import Flask, render_template, request
 import torch
 from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
-from pyngrok import ngrok, conf
-conf.get_default().auth_token = ""
+# from pyngrok import ngrok, conf
+# conf.get_default().auth_token = ""
 
-public_url = ngrok.connect(8888).public_url
-print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:{}/\"".format(public_url, 5000))
+# public_url = ngrok.connect(8888).public_url
+# print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:{}/\"".format(public_url, 5000))
 
-# Update any base URLs to use the public ngrok URL
-app.config["BASE_URL"] = public_url
+# # Update any base URLs to use the public ngrok URL
+# app.config["BASE_URL"] = public_url
 
 app = Flask(__name__)
 
 # Load the Stable Diffusion model
 model_id = "cuongdev/vtthuc3"
-pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
+pipe = StableDiffusionPipeline.from_pretrained(model_id)
 pipe = pipe.to("cpu")
 
 # Change the scheduler to DPMSolverMultistepScheduler
